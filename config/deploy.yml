@@ -30,7 +30,7 @@ ssh:
 
 volumes:
   - "${PWD}/media_data:/media_data"
-  - "${PWD}/storage_data:/app/storage"
+  - "${PWD}/storage_data:/rails/storage"
 
 proxy:
   host: demo.blackcandy.org
