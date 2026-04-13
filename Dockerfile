@@ -12,9 +12,9 @@ RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
 
 RUN apk add --no-cache tzdata libpq-dev build-base gcompat yaml-dev
 
-WORKDIR /app
+WORKDIR /rails
 
-COPY Gemfile* /app/
+COPY Gemfile* /rails/
 
 RUN bundle config --local without 'development test' \
   && bundle install -j4 --retry 3 \
@@ -24,7 +24,7 @@ RUN bundle config --local without 'development test' \
   && find /usr/local/bundle/gems/ -name "*.c" -delete \
   && find /usr/local/bundle/gems/ -name "*.o" -delete
 
-COPY . /app
+COPY . /rails
 
 RUN SECRET_KEY_BASE_DUMMY=1 bundle exec rails assets:precompile \
   && npm cache clean --force \
@@ -48,7 +48,7 @@ RUN apk add --no-cache \
   gcompat \
   jemalloc
 
-WORKDIR /app
+WORKDIR /rails
 
 EXPOSE 80
 
@@ -59,12 +59,11 @@ RUN addgroup -g 1000 -S app && adduser -u 1000 -S app -G app
 
 COPY --from=tianon/gosu /gosu /usr/local/bin/
 COPY --from=builder --chown=app:app /usr/local/bundle/ /usr/local/bundle/
-COPY --from=builder --chown=app:app /app/ /app/
+COPY --from=builder --chown=app:app /rails/ /rails/
 
 # Forwards media listener logs to stdout so they can be captured in docker logs.
-RUN ln -sf /dev/stdout /app/log/media_listener_production.log \
-  && find /app/tmp -type d -exec chmod 1777 '{}' + \
-  && ln -sf /app/storage /storage
+RUN ln -sf /dev/stdout /rails/log/media_listener_production.log \
+  && find /rails/tmp -type d -exec chmod 1777 '{}' +
 
 ENTRYPOINT ["./bin/docker-entrypoint"]
 
