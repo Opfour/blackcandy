@@ -139,7 +139,7 @@ docker pull ghcr.io/blackcandy-org/blackcandy:edge
 
 ### Requirements
 
-- Ruby 3.4
+- Ruby 4.0 
 - Node.js 20
 - libvips
 - FFmpeg
