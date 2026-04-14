@@ -8,12 +8,12 @@ if [ -z ${SECRET_KEY_BASE+x} ]; then
   export SECRET_KEY_BASE=$(rails secret)
 fi
 
-if [ $(eval "echo \$$(($#-1))") == "./bin/rails" ] && [ $(eval "echo \$$(($#))") == "server" ]; then
-  ./bin/rails db:prepare
-fi
-
 if [ "$(id -u)" = '0' ]; then
   exec gosu app "$0" "$@"
+fi
+
+if [ $(eval "echo \$$(($#-1))") == "./bin/rails" ] && [ $(eval "echo \$$(($#))") == "server" ]; then
+  ./bin/rails db:prepare
 fi
 
 exec "$@"
