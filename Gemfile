@@ -87,7 +87,7 @@ group :development, :test do
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[mri mingw x64_mingw]
+  gem "debug", platforms: %i[mri windows]
 end
 
 group :development do
@@ -104,10 +104,11 @@ end
 group :test do
   gem "capybara", "~> 3.40.0"
   gem "cuprite", "~> 0.14.3"
+  gem "minitest-mock", "~> 5.27.0"
   gem "webmock", "~> 3.25.0", require: false
   gem "simplecov", "~> 0.22.0", require: false
   gem "simplecov-lcov", "~> 0.8.0", require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: [ :mingw, :mswin, :x64_mingw, :jruby ]
+gem "tzinfo-data", platforms: [ :windows, :jruby ]
