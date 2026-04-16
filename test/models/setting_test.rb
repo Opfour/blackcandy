@@ -72,7 +72,7 @@ class SettingTest < ActiveSupport::TestCase
   end
 
   test "should sync media when media_path changed" do
-    assert_enqueued_with(job: MediaSyncJob) do
+    assert_enqueued_with(job: MediaSyncAllJob) do
       Setting.update(media_path: Rails.root.join("test/fixtures"))
     end
   end

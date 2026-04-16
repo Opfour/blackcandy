@@ -41,7 +41,7 @@ class Setting < ApplicationRecord
   end
 
   def sync_media
-    MediaSyncJob.perform_later
+    MediaSyncAllJob.perform_later
   end
 
   def toggle_media_listener
