@@ -1,5 +1,33 @@
 # Upgrading Black Candy
 
+
+## Upgrade from Black Candy v3.1 to v3.2
+
+### Update storage volume mount path
+
+In version 3.2, the working directory inside the Docker container has changed from `/app` to `/rails`. This means you need to update your volume mount path for persistent storage data.
+
+If you previously mounted storage like this:
+
+```
+docker run -v ./storage_data:/app/storage ghcr.io/blackcandy-org/blackcandy:3.1.0
+```
+
+You need to change it to:
+
+```
+docker run -v ./storage_data:/rails/storage ghcr.io/blackcandy-org/blackcandy:3.2.0
+```
+
+If you are using a Docker Compose file, update the volume mapping accordingly:
+
+```diff
+  volumes:
+-   - ./storage_data:/app/storage
++   - ./storage_data:/rails/storage
+    - /media_data:/media_data
+```
+
 ## Upgrade from Black Candy v3.0 to v3.1
 
 ### Remove Nginx for sending file 
@@ -234,9 +262,13 @@ Now your Black Candy v2 has been upgraded to v3.0, you can go the [README](https
 > [!WARNING]
 > You can be only possible to upgrade from edge release to the nearest stable release. For example, if you are using edge release of v3, you can only upgrade to nearest stable v3 release. You cannot upgrade to v4 stable release directly. You can check out the date of your edge release and the stable release to determine which stable release you can upgrade to.
 
+### Upgrade from edge to v3.2
+
+Please check the upgrade guide from [v3.1 to v3.2](#upgrade-from-black-candy-v31-to-v32) to see if you are missing any steps. Otherwise, you should be fine upgrading from edge to v3.2.
+
 ### Upgrade from edge to v3.1
 
-Please check the upgrade guide from [v3.0 to v3.1](#upgrade-from-black-candy-v3.0-to-v3.1) to see if you are missing any steps. Otherwise, you should be fine upgrading from edge to v3.1 
+Please check the upgrade guide from [v3.0 to v3.1](#upgrade-from-black-candy-v30-to-v31) to see if you are missing any steps. Otherwise, you should be fine upgrading from edge to v3.1 
 
 ### Upgrade from edge to v3.0
 
