@@ -95,12 +95,12 @@ docker run -e DB_ADAPTER=postgresql -e DB_URL=postgresql://yourdatabaseurl ghcr.
 
 ### How to Persist Data
 
-All the data that need to persist in Black Candy are stored in `/app/storage`, So you can mount this directory to host to persist data.
+All the data that need to persist in Black Candy are stored in `/rails/storage`, So you can mount this directory to host to persist data.
 
 ```shell
 mkdir storage_data
 
-docker run -v ./storage_data:/app/storage ghcr.io/blackcandy-org/blackcandy:latest 
+docker run -v ./storage_data:/rails/storage ghcr.io/blackcandy-org/blackcandy:latest 
 ```
 
 ### Running as an Arbitrary User
@@ -108,7 +108,7 @@ docker run -v ./storage_data:/app/storage ghcr.io/blackcandy-org/blackcandy:late
 When mounting volumes, you may encounter permission issues between the host and the Docker container. To resolve this issue, pass the UID and GID with the `--user` to set the same UID and GID as your host user.
 
 ```shell
-docker run --user 2000:2000 -v ./storage_data:/app/storage ghcr.io/blackcandy-org/blackcandy:latest 
+docker run --user 2000:2000 -v ./storage_data:/rails/storage ghcr.io/blackcandy-org/blackcandy:latest 
 ```
 
 ### Logging
